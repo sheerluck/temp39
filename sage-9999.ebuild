@@ -47,6 +47,7 @@ DEPEND="dev-libs/gmp:0=
 	>=dev-python/docutils-0.12[${PYTHON_USEDEP}]
 	>=dev-python/psutil-4.4.0[${PYTHON_USEDEP}]
 	dev-python/jupyter_core[${PYTHON_USEDEP}]
+	dev-python/jupyter_jsmol[${PYTHON_USEDEP}]
 	>=dev-python/ipython-7.0.0[notebook,${PYTHON_USEDEP}]
 	>=dev-python/ipykernel-4.6.0[${PYTHON_USEDEP}]
 	>=dev-python/jinja-2.8[${PYTHON_USEDEP}]
@@ -56,7 +57,7 @@ DEPEND="dev-libs/gmp:0=
 	>=dev-python/pplpy-0.8.4:=[doc,${PYTHON_USEDEP}]
 	~sci-mathematics/eclib-20190909[flint]
 	~sci-mathematics/gmp-ecm-7.0.4[-openmp]
-	=sci-mathematics/flint-2.6*:=[ntl]
+	=sci-mathematics/flint-2.7*:=[ntl]
 	~sci-libs/givaro-4.1.1
 	>=sci-libs/gsl-2.3
 	>=sci-libs/iml-1.0.4
@@ -65,16 +66,16 @@ DEPEND="dev-libs/gmp:0=
 	sci-libs/m4ri
 	sci-libs/m4rie
 	>=sci-libs/mpfi-1.5.2
-	sci-libs/pynac[-giac,${PYTHON_USEDEP}]
+	=sci-libs/pynac-0.7.26-r1[-giac,${PYTHON_USEDEP}]
 	>=sci-libs/symmetrica-2.0-r3
 	>=sci-libs/zn_poly-0.9
 	>=sci-mathematics/gap-4.11[recommended_pkgs]
 	=sci-mathematics/giac-1.6.0*
-	>=sci-mathematics/glpk-4.65:0=[gmp]
+	>=sci-mathematics/glpk-5.0:0=[gmp]
 	>=sci-mathematics/lcalc-1.23-r10[pari]
 	>=sci-mathematics/lrcalc-1.2
 	>=dev-python/cypari2-2.1.1[${PYTHON_USEDEP}]
-	=sci-mathematics/pari-2.11*
+	=sci-mathematics/pari-2.13*
 	~sci-mathematics/planarity-3.0.0.5
 	>=sci-libs/brial-1.2.5
 	>=sci-mathematics/rw-0.7
@@ -82,7 +83,7 @@ DEPEND="dev-libs/gmp:0=
 	>=sci-mathematics/ratpoints-2.1.3
 	media-libs/gd[jpeg,png]
 	media-libs/libpng:0=
-	~media-gfx/threejs-sage-extension-117
+	~media-gfx/threejs-sage-extension-122
 	>=sys-libs/readline-6.2
 	sys-libs/zlib
 	virtual/cblas
@@ -99,12 +100,12 @@ BDEPEND="app-portage/gentoolkit
 RDEPEND="${DEPEND}
 	>=dev-lang/R-3.2.0
 	>=dev-python/cvxopt-1.2.2[glpk,${PYTHON_USEDEP}]
-	>=dev-python/fpylll-0.5.1[${PYTHON_USEDEP}]
+	>=dev-python/fpylll-0.5.4[${PYTHON_USEDEP}]
 	>=dev-python/mpmath-0.18[${PYTHON_USEDEP}]
 	>=dev-python/networkx-2.4[${PYTHON_USEDEP}]
 	>=dev-python/pexpect-4.2.1[${PYTHON_USEDEP}]
 	>=dev-python/rpy-3.3.5[${PYTHON_USEDEP}]
-	=dev-python/sympy-1.6*[${PYTHON_USEDEP}]
+	=dev-python/sympy-1.7*[${PYTHON_USEDEP}]
 	media-gfx/tachyon[png]
 	jmol? ( sci-chemistry/sage-jmol-bin )
 	>=sci-libs/cddlib-094j[tools]
@@ -167,7 +168,7 @@ python_prepare_all() {
 	# Patch the sage script to including our own environment
 	# Also remove some unappropriate bits.
 	# We used to provide our own but upstream is making it more distro friendly.
-	eapply "${FILESDIR}"/sage_exec-9.2.patch
+	eapply "${FILESDIR}"/sage_exec-9.3.patch
 	if use debug ; then
 		sed -i "s:SAGE_DEBUG=\"no\":SAGE_DEBUG=\"yes\":" bin/sage
 	fi
@@ -211,7 +212,7 @@ python_prepare_all() {
 	############################################################################
 
 	# sage on gentoo environment variables
-	cp -f "${FILESDIR}"/sage_conf.py-9.2 sage/sage_conf.py
+	cp -f "${FILESDIR}"/sage_conf.py-9.3 sage/sage_conf.py
 	eprefixify sage/sage_conf.py
 	# set $PF for the documentation location
 	sed -i "s:@GENTOO_PORTAGE_PF@:${PF}:" sage/sage_conf.py
@@ -236,7 +237,7 @@ python_prepare_all() {
 	# Since we don't have $SAGE_ROOT/sage it fails.
 	# See https://github.com/cschwan/sage-on-gentoo/issues/342
 	# Also some symlinks are created to absolute paths that don't exist yet.
-	eapply "${FILESDIR}"/${PN}-8.8-jupyter.patch
+	eapply "${FILESDIR}"/${PN}-9.3-jupyter.patch
 
 	############################################################################
 	# Fixes to doctests
@@ -261,7 +262,6 @@ python_prepare_all() {
 	#
 	####################################
 
-	eapply "${FILESDIR}"/${PN}-9.1-pdfbuild.patch
 	# support linguas so only requested languages are installed
 	eapply "${FILESDIR}"/${PN}-7.1-linguas.patch
 
