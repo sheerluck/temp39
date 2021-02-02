@@ -1,9 +1,9 @@
-# Copyright 1999-2020 Gentoo Authors
+# Copyright 1999-2021 Gentoo Authors
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=7
 
-PYTHON_COMPAT=( python3_9 )
+PYTHON_COMPAT=( python3_{7..9} )
 PYTHON_REQ_USE="readline,sqlite"
 DISTUTILS_USE_SETUPTOOLS=no
 
@@ -66,16 +66,16 @@ DEPEND="dev-libs/gmp:0=
 	sci-libs/m4ri
 	sci-libs/m4rie
 	>=sci-libs/mpfi-1.5.2
-	=sci-libs/pynac-0.7.26-r1[-giac,${PYTHON_USEDEP}]
+	>=sci-libs/pynac-0.7.26-r1[-giac,${PYTHON_USEDEP}]
 	>=sci-libs/symmetrica-2.0-r3
 	>=sci-libs/zn_poly-0.9
-	>=sci-mathematics/gap-4.11[recommended_pkgs]
+	~sci-mathematics/gap-4.11.0[recommended_pkgs]
 	=sci-mathematics/giac-1.6.0*
 	>=sci-mathematics/glpk-5.0:0=[gmp]
 	>=sci-mathematics/lcalc-1.23-r10[pari]
 	>=sci-mathematics/lrcalc-1.2
-	>=dev-python/cypari2-2.1.1[${PYTHON_USEDEP}]
-	=sci-mathematics/pari-2.11*
+	~dev-python/cypari2-2.1.2[${PYTHON_USEDEP}]
+	=sci-mathematics/pari-2.13*
 	~sci-mathematics/planarity-3.0.0.5
 	>=sci-libs/brial-1.2.5
 	>=sci-mathematics/rw-0.7
@@ -104,12 +104,12 @@ RDEPEND="${DEPEND}
 	>=dev-python/mpmath-0.18[${PYTHON_USEDEP}]
 	>=dev-python/networkx-2.4[${PYTHON_USEDEP}]
 	>=dev-python/pexpect-4.2.1[${PYTHON_USEDEP}]
-	>=dev-python/rpy-3.3.5[${PYTHON_USEDEP}]
+	>=dev-python/rpy-3.3.6[${PYTHON_USEDEP}]
 	=dev-python/sympy-1.7*[${PYTHON_USEDEP}]
 	media-gfx/tachyon[png]
 	jmol? ( sci-chemistry/sage-jmol-bin )
 	>=sci-libs/cddlib-094j[tools]
-	>=dev-python/scipy-1.5.0[${PYTHON_USEDEP}]
+	>=dev-python/scipy-1.6.0[${PYTHON_USEDEP}]
 	sci-mathematics/flintqs
 	~sci-mathematics/gfan-0.6.2
 	>=sci-mathematics/cu2-20060223
