@@ -21,7 +21,7 @@ LANGS="ca de en es fr hu it ja pt ru tr"
 
 LICENSE="GPL-2"
 SLOT="0"
-SAGE_USE="bliss"
+SAGE_USE="bliss meataxe"
 IUSE="debug +doc-html doc-pdf jmol latex testsuite X ${SAGE_USE}"
 L10N_USEDEP=""
 for X in ${LANGS} ; do
@@ -37,7 +37,7 @@ DEPEND="dev-libs/gmp:0=
 	>=dev-libs/mpc-1.1.0
 	>=dev-libs/ntl-11.4.3:=
 	>=dev-libs/ppl-1.1
-	~dev-lisp/ecls-20.4.24
+	>=dev-lisp/ecls-21.2.1
 	>=dev-python/six-1.11.0[${PYTHON_USEDEP}]
 	>=dev-python/numpy-1.16.1[${PYTHON_USEDEP}]
 	>=dev-python/cython-0.29.21[${PYTHON_USEDEP}]
@@ -54,7 +54,7 @@ DEPEND="dev-libs/gmp:0=
 	>=dev-python/matplotlib-3.3.1[${PYTHON_USEDEP}]
 	=dev-python/ipywidgets-7*[${PYTHON_USEDEP}]
 	>=dev-python/gmpy-2.1.0_beta5[${PYTHON_USEDEP}]
-	>=dev-python/pplpy-0.8.4:=[doc,${PYTHON_USEDEP}]
+	~dev-python/pplpy-0.8.7:=[doc,${PYTHON_USEDEP}]
 	~sci-mathematics/eclib-20190909[flint]
 	~sci-mathematics/gmp-ecm-7.0.4[-openmp]
 	=sci-mathematics/flint-2.7*:=[ntl]
@@ -92,6 +92,7 @@ DEPEND="dev-libs/gmp:0=
 	>=sci-libs/libhomfly-1.0.1
 	sci-libs/libbraiding
 	bliss? ( >=sci-libs/bliss-0.73 )
+	meataxe? ( sci-mathematics/shared_meataxe )
 	>=dev-python/sphinx-3.1.0[${PYTHON_USEDEP}]"
 
 BDEPEND="app-portage/gentoolkit
@@ -264,6 +265,9 @@ python_prepare_all() {
 
 	# support linguas so only requested languages are installed
 	eapply "${FILESDIR}"/${PN}-7.1-linguas.patch
+
+	# Force the value of user homedir in call to jmol. jmol sometimes violate the sandbox
+	eapply "${FILESDIR}"/${PN}-9.3-forcejavatmp.patch
 
 	####################################
 	#
